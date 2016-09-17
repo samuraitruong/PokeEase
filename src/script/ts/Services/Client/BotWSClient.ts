@@ -549,6 +549,7 @@ class BotWSClient implements IBotClient, IRequestSender {
         //_.each(this.config.eventHandlers, eh => eh.onMoveToTargetRequest(request));
         this.sendRequest(request);
     }
+    }
     private parseItemString = (itemStr: string): IFortItem[] => {
         const itemParseRegex = /(\d+) x (.+?)(?:,|$)/g;
         const itemsList: IFortItem[] = [];

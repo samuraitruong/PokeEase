@@ -1,4 +1,5 @@
-﻿class ProfileInfoController implements IProfileInfoController {
+﻿
+class ProfileInfoController implements IProfileInfoController {
     private config: IProfileInfoControllerConfig;
 
     constructor(config: IProfileInfoControllerConfig) {
@@ -7,13 +8,30 @@
             this.config.profileInfoElement.find(".profile-username").hide();
         }
     }
+    public toggleEditUserName = (): void => {
+        this.config.profileInfoElement.find(".user-info").addClass("edit-mode")
+    }
+
+    public sendUpdateUsername = (): void => {
+        this.config.profileInfoElement.find(".user-info").removeClass("edit-mode");
+        const username = this.config.profileInfoElement.find("#username-box").val();
+        //check for valid
+
+        this.config.requestSender.sendUpdateNicknameRequest(username);
+    }
+    public setUsername = (username: string): void => {
+        this.config.profileInfoElement.find(".profile-username").text(` ${username} `);
+        this.config.profileInfoElement.find("#username-box").val(`${username}`);
+    } 
 
     public setProfileData = (profile: IProfileEvent):void => {
-        this.config.profileInfoElement.find(".profile-username").text(` ${profile.PlayerData.Username} `);
         this.config.profileInfoElement.find(".profile-pokecoin").text(profile.PlayerData.PokeCoin);
         this.config.profileInfoElement.find(".profile-stardust-current").text(profile.PlayerData.StarDust);
         this.config.profileInfoElement.find(".profile-stardust-loading").remove();
         this.config.profileInfoElement.find(".profile-stardust-loaded").show();
+        this.config.profileInfoElement.find(".profile-username").click(this.toggleEditUserName);
+        this.config.profileInfoElement.find("#username-update").click(this.sendUpdateUsername)
+        this.setUsername(profile.PlayerData.Username);
     }
 
     public setPlayerStats = (playerStats: IPlayerStatsEvent):void => {

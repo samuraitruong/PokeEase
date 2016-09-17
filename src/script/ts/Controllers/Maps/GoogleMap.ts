@@ -557,7 +557,7 @@ class GoogleMap implements IMap {
     public usePokeStop(pokeStopUsed: IFortUsedEvent): void {
         let setStatus = PokeStopStatus.Visited;
         const stopId = pokeStopUsed.Id;
-        const pStop = this.pokestops[stopId];
+        let pStop = this.pokestops[stopId];
         if(!pStop) {
             const newStop: IPokeStopEvent = {
                 Latitude : pokeStopUsed.Latitude,
@@ -568,11 +568,12 @@ class GoogleMap implements IMap {
                 LastModifiedTimestampMs:"",
                 LureInfo:null,
                 Type:FortType.PokeStop,
-                Timestamp: pokeStopUsed.Timestamp
+                Timestamp: pokeStopUsed.Timestamp,
             }
 
             const arr :IPokeStopEvent[] = [newStop]
-            this.setPokeStops(arr)        
+            this.setPokeStops(arr)
+            pStop = this.pokestops[stopId];
         }
         pStop.event.Name = pokeStopUsed.Name;
         if (pStop.event.Status === PokeStopStatus.Lure) {

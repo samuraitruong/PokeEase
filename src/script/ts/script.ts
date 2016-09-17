@@ -86,7 +86,8 @@ $(() => {
 
     const profileInfoController = new ProfileInfoController({
         hideUsername: false,
-        profileInfoElement: $("#profile")
+        profileInfoElement: $("#profile"),
+        requestSender: client
     });
 
     const mapConfig: IMapConfig = {

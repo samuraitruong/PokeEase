@@ -43,4 +43,5 @@ interface IEventHandler {
     onSendHumanSnipePokemonRemoveRequest: (request: IRequest) => void;
     onMoveToTargetRequest : (request: IMoveToLocationRequest) => void;
     onUnknownEvent?: (message: any) => void;
+    onUpdateNickname : (ev: IUpdatedNicknameEvent)  => void;
 }

@@ -2,5 +2,6 @@
     setProfileData(profile: IProfileEvent):void;
     setPlayerStats(playerStats: IPlayerStatsEvent): void;
     addStardust(stardust: number, stardustAdded?: number): void;
-    addExp(totalExp: number, expAdded?:number);
+    addExp(totalExp: number, expAdded?: number);
+    setUsername(newNickname: string);
 }

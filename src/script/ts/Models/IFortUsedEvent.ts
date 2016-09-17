@@ -6,6 +6,8 @@ interface IFortUsedEvent extends IUpdatePositionEvent {
     Items: string;
     Name: string;
     ItemsList: IFortItem[];
+    CooldownCompleteTimestampMs: string;
+
 }
 
 interface IFortItem {

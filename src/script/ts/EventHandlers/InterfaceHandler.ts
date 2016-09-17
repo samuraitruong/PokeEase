@@ -34,6 +34,9 @@ class InterfaceHandler implements IEventHandler {
     public onSendUpgradePokemonRequest (request: IRequest): void  {
 
     }
+    public onUpdateNickname(ev: IUpdatedNicknameEvent): void {
+        this.config.profileInfoController.setUsername(ev.Nickname);
+    }
     public onLog(logEvent: ILogEvent): void {
         this.config.consoleController.log(logEvent);
     }
@@ -101,6 +104,9 @@ class InterfaceHandler implements IEventHandler {
         
         if(pokeStop){
             pokeStop.Name = fortUsed.Name;
+        }
+        else {
+            //this.pokeStops.push(fortUsed);           
         }
 
         this.config.map.usePokeStop(fortUsed);

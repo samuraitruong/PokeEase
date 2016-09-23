@@ -31,7 +31,7 @@
         });
         this.playerPath.addTo(this.map);
         this.playerMarker = L.marker([0, 0], {
-            icon: new L.Icon({
+            icon: L.icon({
                 iconUrl: "images/markers/location.png",
                 iconSize: [50, 55],
                 iconAnchor: [25, 45]
@@ -40,37 +40,37 @@
         this.playerMarker.addTo(this.map);
 
         this.pokeStopIcons = [];
-        this.pokeStopIcons[PokeStopStatus.Normal] = new L.Icon({
+        this.pokeStopIcons[PokeStopStatus.Normal] =  L.icon({
             iconUrl: "images/markers/Normal.png",
             iconSize: [48,48]
         });
-        this.pokeStopIcons[PokeStopStatus.Visited] = new L.Icon({
+        this.pokeStopIcons[PokeStopStatus.Visited] =  L.icon({
             iconUrl: "images/markers/Visited.png",
             iconSize: [48, 48]
         });
-        this.pokeStopIcons[PokeStopStatus.Lure] = new L.Icon({
+        this.pokeStopIcons[PokeStopStatus.Lure] =  L.icon({
             iconUrl: "images/markers/Lured.png",
             iconSize: [48, 48]
         });
-        this.pokeStopIcons[PokeStopStatus.VisitedLure] = new L.Icon({
+        this.pokeStopIcons[PokeStopStatus.VisitedLure] =  L.icon({
             iconUrl: "images/markers/VisitedLure.png",
             iconSize: [48, 48]
         });
 
         this.gymIcons = [];
-        this.gymIcons[PlayerTeam.Neutral] = new L.Icon({
+        this.gymIcons[PlayerTeam.Neutral] =  L.icon({
             iconUrl: "images/markers/unoccupied.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[PlayerTeam.Mystic] = new L.Icon({
+        this.gymIcons[PlayerTeam.Mystic] =  L.icon({
             iconUrl: "images/markers/mystic.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[PlayerTeam.Valor] = new L.Icon({
+        this.gymIcons[PlayerTeam.Valor] =  L.icon({
             iconUrl: "images/markers/valor.png",
             iconSize: [48, 48]
         });
-        this.gymIcons[PlayerTeam.Instinct] = new L.Icon({
+        this.gymIcons[PlayerTeam.Instinct] =  L.icon({
             iconUrl: "images/markers/instinct.png",
             iconSize: [48, 48]
         });
@@ -81,11 +81,12 @@
     }
 
     public movePlayer = (position: IUpdatePositionEvent): void => {
-        const posArr = [position.Latitude, position.Longitude];
+        const posArr = L.latLng(position.Latitude, position.Longitude);
+        
         this.playerMarker.setLatLng(posArr);
         this.playerPath.addLatLng(posArr);
         if (this.config.followPlayer) {
-            this.map.setView(posArr);
+            this.map.setView(posArr, this.map.getZoom());
         }
     }
 
@@ -93,8 +94,8 @@
         _.each(this.pokeStops, m => this.map.removeLayer(m.LMarker));
         this.pokeStops = [];
         _.each(pokeStops, pokeStop => {
-           const posArr = [pokeStop.Latitude, pokeStop.Longitude];
-           const marker = new L.Marker(posArr,
+            const posArr = L.latLng(pokeStop.Latitude, pokeStop.Longitude);
+            const marker = L.marker(posArr,
            {
                icon: this.pokeStopIcons[pokeStop.Status]
            });
@@ -108,8 +109,8 @@
         _.each(this.gyms, gym => this.map.removeLayer(gym.LMarker));
         this.gyms = [];
         _.each(gyms, gym => {
-            const posArr = [gym.Latitude, gym.Longitude];
-            const marker = new L.Marker(posArr,
+            const posArr = L.latLng(gym.Latitude, gym.Longitude);
+            const marker = L.marker(posArr,
             {
                 icon: this.gymIcons[gym.OwnedByTeam]
             });
@@ -138,7 +139,7 @@
         alert('not implement ---onSnipePokemonStart')
     }
     public onPokemonCapture(pokemonCapture: IPokemonCaptureEvent): void {
-        const posArr = [pokemonCapture.Latitude, pokemonCapture.Longitude];
+        const posArr = L.latLng(pokemonCapture.Latitude, pokemonCapture.Longitude);
         const img = new Image();
         const imgUrl = `images/pokemon/${pokemonCapture.Id}.png`;
         const maxWidth = 42;
@@ -153,16 +154,17 @@
             }
             const width = img.width * scaleFactor;
             const height = img.height * scaleFactor;
-            const marker = new L.Marker(posArr,
+            const marker = L.marker(posArr,
                 {
-                    icon: new L.Icon({
+                    icon:  L.icon({
                         iconUrl: imgUrl,
                         iconSize: [width, height]
                     })
-                }).bindPopup("hahaha. I am pokemon");
-                marker.bindPopup('aaaaaaaaaaa')
+                })
+                //.bindPopup("hahaha. I am pokemon");
+                //marker.bindPopup('aaaaaaaaaaa')
             this.map.addLayer(marker);
-            pokemonCapture.LMarker = marker;
+            //pokemonCapture. = marker;
             this.pokemons.push(pokemonCapture);
         };
         img.src = imgUrl;

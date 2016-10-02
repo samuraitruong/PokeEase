@@ -40,12 +40,23 @@ class PokemonMenuController implements IPokemonMenuController {
         this.updatePokemonListInner();
     }
 
+    public onPokemonCapture = (pkm: IPokemonCaptureEvent): void => {
+        console.log('pokemon captured, update candy....', pkm);
+        _.forEach(this.pokemonList.Pokemons, (x) => {
+            if (x.PokemonId.toString() == pkm.Id) {
+                x.FamilyCandies = pkm.FamilyCandies;
+            }
+        });
+
+        this.updatePokemonListInner();
+    }
     public pokemonListRequested = (request: IRequest): void => {
         this.config.pokemonLoadingSpinner.show();
     }
 
     public updatePokemonList = (pokemonList: IPokemonListEvent): void => {
         this.pokemonList = pokemonList;
+        console.log("POKEMON #######", pokemonList);
         this.updatePokemonListInner();
     }
 

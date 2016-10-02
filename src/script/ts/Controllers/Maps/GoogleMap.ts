@@ -467,8 +467,9 @@ class GoogleMap implements IMap {
         // Translate list of incoming pokestops into id -> event dictionary.
         var incomingPokestops: { [id: string]: IPokeStopEvent } = {};
         _.each(pokeStops, stop => { incomingPokestops[stop.Id] = stop; });
-
+        console.log(incomingPokestops);
         // Check for any markers that need to be removed.
+
         _.each(this.pokestops, stop => {
             const stopId = stop.event.Id;
             if (!(stopId in incomingPokestops)) {
@@ -571,8 +572,14 @@ class GoogleMap implements IMap {
                 Timestamp: pokeStopUsed.Timestamp,
             }
 
-            const arr :IPokeStopEvent[] = [newStop]
-            this.setPokeStops(arr)
+            const marker = this.createStopMarker(newStop);
+            const infoWindow = this.createStopInfoWindow(newStop, marker);
+            this.pokestops[stopId] = {
+                event: newStop,
+                marker: marker,
+                infoWindow: infoWindow
+            };
+
             pStop = this.pokestops[stopId];
         }
         pStop.event.Name = pokeStopUsed.Name;
@@ -585,9 +592,13 @@ class GoogleMap implements IMap {
         
         const newContentHtml = app.templates.InfoWindow.PokestopInfoWindow(pStop.event)
         pStop.infoWindow.setContent(newContentHtml);
-       
+        
+        this.refreshPokestops();
     }
-
+    public refreshPokestops = (): void => {
+        const currentTime = (new Date()).getTime();
+        //_.filter(this.pokestops, x=> x.event.
+    }
     public onSnipePokemonStart(snipePokemon: IHumanWalkSnipeStartEvent) : void {
        console.log(snipePokemon);
        if(this.snipeMarker) {

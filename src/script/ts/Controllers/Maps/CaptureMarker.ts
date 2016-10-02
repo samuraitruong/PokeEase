@@ -33,7 +33,7 @@
 			    'position': "absolute",
 			    'width': "60px",
 			    'height': "60px",
-			    'z-index': "99999"
+                'z-index': this.args.PokemonId 
 		    })
 
 		    if(this.args.PokemonId !== 'undefined')

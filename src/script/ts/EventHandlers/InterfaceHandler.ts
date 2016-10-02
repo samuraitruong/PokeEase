@@ -138,6 +138,8 @@ class InterfaceHandler implements IEventHandler {
     public onPokemonCapture = (pokemonCapture: IPokemonCaptureEvent): void => {
         this.currentItemCount--;
         this.config.mainMenuController.setItemCount(this.currentItemCount);
+        this.config.pokemonMenuController.onPokemonCapture(pokemonCapture);
+
         if (this.previousCaptureAttempts.length > 0 && this.previousCaptureAttempts[0].Id !== pokemonCapture.Id) {
             this.previousCaptureAttempts = [];
             if (this.itemsUsedForCapture.length > 0) {

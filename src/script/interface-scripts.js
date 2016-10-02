@@ -1,6 +1,4 @@
 $(document).ready(function () {
-
-
     // MENU EVENTS
     $("#menu .close-button").click(function() {
         $("#menu").animate({"left": "-200px"}, 500, "easeOutQuint");

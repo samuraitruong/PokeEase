@@ -3,5 +3,6 @@
 interface IPokemonMenuController {
     pokemonListRequested(request: IRequest): void;
     updatePokemonList(pokemonList: IPokemonListEvent): void;
-    updatePokemonAfterUpgraded (pkm: IUpgradeEvent ): void;
+    updatePokemonAfterUpgraded(pkm: IUpgradeEvent): void;
+    onPokemonCapture(pokemon: IPokemonCaptureEvent): void;
 }

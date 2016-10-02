@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../../typings/index.d.ts" />
 
-
 $(() => {
     StaticData.init(rawData);
     const dataStorage = new LocalStorageDataStorage();
